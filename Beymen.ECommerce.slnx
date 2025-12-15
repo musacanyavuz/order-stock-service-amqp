@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Notification.API/Notification.API.csproj" />
+    <Project Path="src/Order.API/Order.API.csproj" />
+    <Project Path="src/Shared/Shared.csproj" />
+    <Project Path="src/Stock.API/Stock.API.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Beymen.ECommerce.Tests/Beymen.ECommerce.Tests.csproj" />
+  </Folder>
+</Solution>

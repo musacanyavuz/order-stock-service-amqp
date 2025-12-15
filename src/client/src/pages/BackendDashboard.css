@@ -1,0 +1,298 @@
+/* --- GLOBAL STYLES --- */
+:root {
+    --bg-color: #0f0f13;
+    --card-bg: #1a1a20;
+    --text-color: #e0e0e0;
+    --primary-color: #00d4ff;
+    /* Neon Blue */
+    --accent-color: #ff0055;
+    /* Neon Red */
+    --success-color: #00ff9d;
+    /* Neon Green */
+    --warning-color: #ffbd00;
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-container {
+    padding: 20px;
+}
+
+.dashboard-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    font-size: 2rem;
+}
+
+/* --- GRID LAYOUT --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* --- CARD STYLES --- */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.1);
+    border-color: #444;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.card-header i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.card-title {
+    font-weight: bold;
+    color: #fff;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+}
+
+/* --- BUTTONS --- */
+button {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.btn-danger {
+    background: linear-gradient(45deg, #ff0055, #ff4081);
+    box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(45deg, #00b09b, #96c93d);
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #00d4ff, #090979);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.btn-warning {
+    background: linear-gradient(45deg, #f09819, #edde5d);
+    color: #000;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* --- UTILITY & ANIMATIONS --- */
+.display-box {
+    background: #000;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    color: var(--success-color);
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.status-badge.green {
+    background-color: var(--success-color);
+}
+
+.status-badge.red {
+    background-color: var(--accent-color);
+}
+
+.status-badge.yellow {
+    background-color: var(--warning-color);
+}
+
+/* --- PANEL SPECIFIC STYLES --- */
+
+/* 1. Race Condition */
+.balance-display {
+    font-size: 2rem;
+    color: #fff;
+}
+
+.race-log {
+    font-size: 0.8rem;
+    color: #888;
+    height: 60px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+/* 2. Circuit Breaker */
+.circuit-diagram {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.connector {
+    height: 4px;
+    width: 50px;
+    background: #555;
+    transition: 0.3s;
+}
+
+.connector.open {
+    transform: rotate(-45deg);
+    transform-origin: left;
+    background: var(--accent-color);
+}
+
+/* 3. Cache vs DB */
+.data-source-indicator.cache {
+    background-color: rgba(0, 255, 157, 0.1);
+    border-color: var(--success-color);
+}
+
+.data-source-indicator.db {
+    background-color: rgba(255, 189, 0, 0.1);
+    border-color: var(--warning-color);
+}
+
+/* 4. Message Queue */
+.mq-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
+    min-height: 50px;
+}
+
+.mq-box {
+    min-width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: #000;
+    font-weight: bold;
+    animation: popIn 0.3s ease;
+}
+
+.worker {
+    width: 60px;
+    height: 60px;
+    border: 2px dashed #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-left: auto;
+    position: relative;
+}
+
+.worker.working {
+    border-color: var(--success-color);
+    animation: spin 1s infinite linear;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 5. Load Balancer */
+.servers-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.server-box {
+    width: 80px;
+    height: 80px;
+    background: #222;
+    border: 1px solid #444;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.1s;
+}
+
+.server-box.active {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}

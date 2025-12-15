@@ -1,0 +1,133 @@
+.arch-dashboard-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.arch-dashboard-container h1 {
+    text-align: center;
+    color: #2979ff;
+    margin-bottom: 40px;
+}
+
+.scenario-section {
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #333;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.control-panel {
+    border-right: 1px solid #333;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    line-height: 1.4;
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.visual-panel {
+    position: relative;
+    background-color: #000;
+    border-radius: 8px;
+    min-height: 250px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.box {
+    width: 100px;
+    height: 80px;
+    background: #333;
+    border: 2px solid #555;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    color: #e0e0e0;
+}
+
+.box i {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.tech-summary {
+    grid-column: span 2;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #ff9100;
+    background: rgba(255, 145, 0, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 4px solid #ff9100;
+}
+
+.result-overlay {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.result-overlay.error {
+    background: rgba(255, 23, 68, 0.9);
+    color: white;
+}
+
+.result-overlay.success {
+    background: rgba(0, 230, 118, 0.9);
+    color: black;
+}
+
+.packet {
+    width: 16px;
+    height: 16px;
+    background-color: #2979ff;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.version-tag {
+    background: #444;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}

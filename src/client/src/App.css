@@ -1,0 +1,130 @@
+#root {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.controls-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.tabs button.active {
+  background-color: #646cff;
+  color: white;
+}
+
+.control-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.control-group button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.control-group button:hover {
+  background-color: #0056b3;
+}
+
+.control-group button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.scroll-box {
+  height: 500px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.log-line {
+  font-family: monospace;
+  font-size: 12px;
+  border-bottom: 1px solid #eee;
+  padding: 2px 0;
+}
+
+.notification-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #f0f2f5;
+}
+
+.order-card {
+  background-color: white;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+}
+
+.order-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.order-events {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.event-badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  font-size: 11px;
+  text-align: center;
+}
+
+.event-badge.OrderSent {
+  background-color: #6c757d;
+}
+
+.event-badge.OrderCreated {
+  background-color: #17a2b8;
+}
+
+.event-badge.StockReserved {
+  background-color: #28a745;
+}
+
+.event-badge.StockFailed {
+  background-color: #dc3545;
+}
