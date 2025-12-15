@@ -97,8 +97,6 @@ dotnet test
 - [x] **Core Services**: Order, Stock, Notification APIs implementation.
 - [x] **Reliability**: Outbox, Idempotency, and Retry policies.
 - [x] **Testing**: Initial Unit Tests for Stock Reservation logic.
-- [ ] **API Gateway**: Implementing Ocelot or YARP for unified entry point.
-- [ ] **Identity Server**: Centralized authentication/authorization.
 - [ ] **Monitoring**: Integrating Prometheus & Grafana dashboards.
 
 ## 🤖 AI Contributors
