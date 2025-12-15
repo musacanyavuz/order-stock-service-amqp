@@ -101,5 +101,11 @@ dotnet test
 - [ ] **Identity Server**: Centralized authentication/authorization.
 - [ ] **Monitoring**: Integrating Prometheus & Grafana dashboards.
 
+## 🤖 AI Contributors
+
+*   **ChatGPT**
+*   **Antigravity**
+*   **Cursor**
+
 ## 📄 License
 This project is open-sourced under the MIT license.

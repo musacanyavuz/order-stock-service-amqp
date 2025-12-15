@@ -99,5 +99,11 @@ dotnet test
 - [ ] **Identity Server**: Merkezi kimlik doğrulama ve yetkilendirme.
 - [ ] **İzleme (Monitoring)**: Prometheus ve Grafana entegrasyonu.
 
+## 🤖 AI Katkıda Bulunanlar
+
+*   **ChatGPT**
+*   **Antigravity**
+*   **Cursor**
+
 ## 📄 Lisans
 Bu proje MIT lisansı altında açık kaynaklanmıştır.
