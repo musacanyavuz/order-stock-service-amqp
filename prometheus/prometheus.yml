@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 1s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'order-api'
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['order.api:8080']
+
+  - job_name: 'stock-api'
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['stock.api:8080']
+      
+  - job_name: 'notification-api'
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['notification.api:8080']
+
+  - job_name: 'rabbitmq'
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['rabbitmq:15692']

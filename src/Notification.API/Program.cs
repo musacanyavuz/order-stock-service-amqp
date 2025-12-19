@@ -3,6 +3,7 @@ using MassTransit;
 using Notification.API.Consumers;
 using Microsoft.EntityFrameworkCore;
 using Notification.API.Infrastructure;
+using Shared.Monitoring;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -45,6 +46,7 @@ builder.Services.AddMassTransit(x =>
 
 // Logging
 builder.Services.AddSingleton<Shared.Logging.IMongoLogService, Shared.Logging.MongoLogService>();
+builder.Services.AddServiceMonitoring("Notification.API");
 
 var app = builder.Build();
 
@@ -65,6 +67,7 @@ app.UseCors("AllowClient");
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapPrometheusScrapingEndpoint();
 app.MapHub<Notification.API.Hubs.NotificationHub>("/notificationHub");
 
 // Apply migrations

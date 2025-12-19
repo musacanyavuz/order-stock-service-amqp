@@ -17,12 +17,14 @@
     *   **Idempotency**: Tekrarlayan mesajların (Duplicate Messages) sistemi bozmasını engelleyen filtreler.
     *   **Otomatik Global Loglama**: MassTransit Filtreleri (`MongoLogPublishFilter`, `MongoLogConsumeFilter`) sayesinde akan her mesaj otomatik loglanır, manuel loglama hatası ortadan kalkar.
     *   **Retry Policy (Yeniden Deneme)**: Stok çakışmalarını (Optimistic Concurrency) yönetmek için Stock.API üzerinde "Exponential Backoff" stratejisi.
+    *   **Gelişmiş İzlenebilirlik (Observability)**: **Grafana**, **Prometheus** ve **OpenTelemetry** ile tam sistem görünürlüğü. Dashboard; dağıtık izleme, RabbitMQ Backpressure takibi ve canlı iş metriklerini içerir.
 
 ## 🛠 Teknoloji Yığını
 
 *   **Backend**: .NET 10.0 Web API
 *   **Mesaj Kuyruğu**: RabbitMQ (MassTransit Abstraction layer ile)
 *   **Veritabanı**: PostgreSQL (Entity Framework Core), MongoDB (Loglar)
+*   **İzleme**: Prometheus, Grafana, OpenTelemetry
 *   **Konteyner**: Docker & Docker Compose
 *   **Test**: xUnit, Moq (Unit ve Entegrasyon Testleri)
 
@@ -64,6 +66,9 @@ Proje, tüm altyapıyı ve servisleri tek komutla başlatmak için bir script i�
 | **Stock API** | `5002` | [http://localhost:5002/swagger](http://localhost:5002/swagger) | Stok işlemleri (Consumer ağırlıklı). |
 | **Notification API** | `5003` | [http://localhost:5003/swagger](http://localhost:5003/swagger) | SignalR bildirimleri. |
 | **Client App** | `5173` | [http://localhost:5173](http://localhost:5173) | Manuel test arayüzü. |
+| **Grafana** | `3000` | [http://localhost:3000](http://localhost:3000) | Sistem Paneli (Kullanıcı: admin / Şifre: admin). |
+| **RabbitMQ Mgmt** | `15672` | [http://localhost:15672](http://localhost:15672) | Kuyruk Yönetimi (Kullanıcı: guest / Şifre: guest). |
+| **Prometheus** | `9091` | [http://localhost:9091](http://localhost:9091) | Ham Metrikler. |
 
 ### 4. Manuel Başlatma (Alternatif)
 Script kullanmak istemezseniz:
@@ -97,7 +102,18 @@ dotnet test
 - [x] **Test**: Stok rezervasyon mantığı için Unit Testler.
 - [ ] **API Gateway**: Ocelot veya YARP ile tek bir giriş noktası sağlanması.
 - [ ] **Identity Server**: Merkezi kimlik doğrulama ve yetkilendirme.
-- [ ] **İzleme (Monitoring)**: Prometheus ve Grafana entegrasyonu.
+- [x] **İzleme (Monitoring)**: Prometheus ve Grafana entegrasyonu.
+
+## 📊 İzleme ve Gözlemlenebilirlik (Yeni)
+
+Proje, "Senior Developer" seviyesinde bir izleme ortamı sunar:
+
+1.  **İş Metrikleri**: Anlık `Toplam Sipariş` sayısı ve hata oranları.
+2.  **Mimari Akış**: Bir isteğin yolculuğunun görselleştirilmesi: `Order API (Producer)` -> `RabbitMQ (Kuyruk)` -> `Stock/Notification (Consumer)`.
+3.  **Backpressure İzleme**: RabbitMQ üzerindeki `Throughput (Giriş/Çıkış)` hızlarını takip ederek, yük altındaki performans ve kuyruk derinliği (`Queue Depth`) analizi.
+4.  **Performans**: Tüm servisler için Latency (P95) takibi.
+
+**Dashboard Erişimi:** [http://localhost:3000](http://localhost:3000) -> *Dashboards* -> *Beymen Senior Case Study*
 
 ## 🤖 AI Katkıda Bulunanlar
 

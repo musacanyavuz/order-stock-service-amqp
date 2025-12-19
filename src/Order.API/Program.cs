@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Order.API.Infrastructure;
 using System.Reflection;
 using System.Data;
+using Shared.Monitoring;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +57,7 @@ builder.Services.AddMassTransit(x =>
 
 // Logging
 builder.Services.AddSingleton<Shared.Logging.IMongoLogService, Shared.Logging.MongoLogService>();
+builder.Services.AddServiceMonitoring("Order.API");
 
 var app = builder.Build();
 
@@ -76,6 +78,7 @@ app.UseCors("AllowClient");
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapPrometheusScrapingEndpoint();
 
 // Apply migrations
 using (var scope = app.Services.CreateScope())

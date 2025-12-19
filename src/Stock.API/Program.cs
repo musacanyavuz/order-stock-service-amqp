@@ -2,6 +2,7 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Stock.API.Consumers;
 using Stock.API.Infrastructure;
+using Shared.Monitoring;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +62,7 @@ builder.Services.AddMassTransit(x =>
 
 // Logging
 builder.Services.AddSingleton<Shared.Logging.IMongoLogService, Shared.Logging.MongoLogService>();
+builder.Services.AddServiceMonitoring("Stock.API");
 
 var app = builder.Build();
 
@@ -81,6 +83,7 @@ app.UseAuthorization();
 app.UseCors();
 
 app.MapControllers();
+app.MapPrometheusScrapingEndpoint();
 
 // Apply migrations
 using (var scope = app.Services.CreateScope())

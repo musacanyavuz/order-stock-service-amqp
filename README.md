@@ -20,12 +20,14 @@ A production-grade, distributed e-commerce backend built with .NET Core, demonst
     *   **Database per Service**: Isolated data stores (PostgreSQL for transactional data: Order, Stock, Notification; MongoDB for logs).
     *   **Automated Global Logging**: MassTransit Filters (`MongoLogPublishFilter`, `MongoLogConsumeFilter`) automatically log every message with `RequestId` propagation, removing the need for manual logging.
     *   **Retry Policy**: Exponential backoff for handling optimistic concurrency conflicts in Stock.API.
+    *   **Advanced Observability**: Full system visibility using **Grafana**, **Prometheus**, and **OpenTelemetry**. Dashboard includes distributed tracing emulation, RabbitMQ Backpressure monitoring, and real-time business metrics.
 
 ## 🛠 Technology Stack
 
 *   **Backend**: .NET 10.0 Web API
 *   **Message Broker**: RabbitMQ (MassTransit Abstraction)
 *   **Databases**: PostgreSQL (TF: Entity Framework Core), MongoDB (Logging)
+*   **Monitoring**: Prometheus, Grafana, OpenTelemetry
 *   **Containerization**: Docker & Docker Compose
 *   **Testing**: xUnit, Moq (Unit & Integration Tests)
 
@@ -66,6 +68,9 @@ The project includes a startup script to launch all infrastructure and services 
 | **Stock API** | `5002` | [http://localhost:5002/swagger](http://localhost:5002/swagger) | Manages stock reservations (Consumer). |
 | **Notification API** | `5003` | [http://localhost:5003/swagger](http://localhost:5003/swagger) | Real-time notifications via SignalR. |
 | **Client App** | `5173` | [http://localhost:5173](http://localhost:5173) | Frontend for manual testing. |
+| **Grafana** | `3000` | [http://localhost:3000](http://localhost:3000) | System Dashboard (User: admin / Pass: admin). |
+| **RabbitMQ Mgmt** | `15672` | [http://localhost:15672](http://localhost:15672) | Broker Management (User: guest / Pass: guest). |
+| **Prometheus** | `9091` | [http://localhost:9091](http://localhost:9091) | Raw Metrics. |
 
 ### 4. Manual Startup (Alternative)
 If you prefer not to use the script:
@@ -97,7 +102,18 @@ dotnet test
 - [x] **Core Services**: Order, Stock, Notification APIs implementation.
 - [x] **Reliability**: Outbox, Idempotency, and Retry policies.
 - [x] **Testing**: Initial Unit Tests for Stock Reservation logic.
-- [ ] **Monitoring**: Integrating Prometheus & Grafana dashboards.
+- [x] **Monitoring**: Integrating Prometheus & Grafana dashboards.
+
+## 📊 Monitoring & Observability (New)
+
+The project creates a "Senior Developer" level monitoring environment:
+
+1.  **Business Metrics**: Track `Total Orders` and error rates in real-time.
+2.  **Architectural Flow**: Visualizes the journey of a request: `Order API (Producer)` -> `RabbitMQ (Queue)` -> `Stock/Notification (Consumer)`.
+3.  **Backpressure Monitoring**: Tracks `Throughput (In/Out)` on RabbitMQ to prove the system handles load efficiently alongside `Queue Depth`.
+4.  **Performance**: Latency (P95) tracking for all microservices.
+
+**Access Dashboard:** [http://localhost:3000](http://localhost:3000) -> *Dashboards* -> *Beymen Senior Case Study*
 
 ## 🤖 AI Contributors
 
