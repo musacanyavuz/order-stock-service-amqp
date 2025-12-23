@@ -115,6 +115,22 @@ Proje, "Senior Developer" seviyesinde bir izleme ortamı sunar:
 
 **Dashboard Erişimi:** [http://localhost:3000](http://localhost:3000) -> *Dashboards* -> *Beymen Senior Case Study*
 
+## 🎭 Senior Developer Şovun Parçası (Yeni)
+
+Sunumunuzda jüriyi etkilemek için bu özellikleri kullanın:
+
+### 1. 🕵️ Dağıtık İzleme (Jaeger)
+Mikroservisler arasındaki her isteğin tam yolculuğunu ve gecikme sürelerini görselleştirin.
+*   **Adres**: [http://localhost:16686](http://localhost:16686)
+*   **Kullanım**: Sol menüden `Service: Order.API` seçin -> `Find Traces` butonuna basın. Bir trace'e tıklayarak (Order -> RabbitMQ -> Stock) şelale (waterfall) akışını gösterin.
+
+### 2. ⚡ Yük Testi & Kaos Mühendisliği
+Client Uygulaması [http://localhost:5173](http://localhost:5173) artık bir **Senior Showcase Paneline** sahip:
+
+*   **⚡ Stress Test**: Anında **500 Sipariş** gönderir. Grafana'da RabbitMQ throughput'un nasıl fırladığını göstermek için kullanın.
+*   **🐢 Simulate Latency**: Stock servisini 2 saniye yavaşlatır. **Backpressure** (Kuyruk birikmesi) olayını ve sistemin çökmeden bunu nasıl yönettiğini göstermek için mükemmeldir.
+*   **💥 Simulate Failure**: Stock servisini hata fırlatmaya zorlar. **Retry Policy** (Yeniden deneme) mekanizmasını kanıtlamak için kullanın.
+
 ## 🤖 AI Katkıda Bulunanlar
 
 *   **ChatGPT**

@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace Shared.Monitoring
 {
@@ -17,6 +18,18 @@ namespace Shared.Monitoring
                         .AddAspNetCoreInstrumentation()
                         .AddRuntimeInstrumentation()
                         .AddPrometheusExporter();
+                })
+                .WithTracing(builder =>
+                {
+                    builder
+                        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName, serviceVersion))
+                        .AddAspNetCoreInstrumentation()
+                        .AddHttpClientInstrumentation()
+                        .AddSource("MassTransit") // Critical for RabbitMQ tracing
+                        .AddOtlpExporter(opts =>
+                        {
+                            opts.Endpoint = new Uri("http://jaeger:4317");
+                        });
                 });
 
             return services;

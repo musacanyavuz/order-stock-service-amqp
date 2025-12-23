@@ -115,6 +115,22 @@ The project creates a "Senior Developer" level monitoring environment:
 
 **Access Dashboard:** [http://localhost:3000](http://localhost:3000) -> *Dashboards* -> *Beymen Senior Case Study*
 
+## 🎭 Senior Developer Showcase (New)
+
+Ready to impress? Use these advanced features during your presentation:
+
+### 1. 🕵️ Distributed Tracing (Jaeger)
+Visualize the exact path and latency of every request across microservices.
+*   **URL**: [http://localhost:16686](http://localhost:16686)
+*   **How to use**: specificy `Service: Order.API` -> `Find Traces`. Click on a trace to see the waterfall view (Order -> RabbitMQ -> Stock).
+
+### 2. ⚡ Stress Testing & Chaos Engineering
+The Client App [http://localhost:5173](http://localhost:5173) now has a **Senior Showcase Panel**:
+
+*   **⚡ Stress Test**: Sends **500 Orders** instantly. Use this to demonstrate RabbitMQ throughput on Grafana.
+*   **🐢 Simulate Latency**: Delays Stock processing by 2s. Use this to demonstrate **Backpressure** (Queue Depth rising) and how the system handles it without crashing.
+*   **💥 Simulate Failure**: Makes Stock API throw errors. Use this to demonstrate **Retry Policies** and resilience.
+
 ## 🤖 AI Contributors
 
 *   **ChatGPT**

@@ -13,6 +13,10 @@ export default function TestClientPage() {
     const [isPeriodicRunning, setIsPeriodicRunning] = useState(false)
     const intervalRef = useRef(null)
 
+    // Chaos State (Showcase)
+    const [isChaosLatency, setIsChaosLatency] = useState(false)
+    const [isChaosFailure, setIsChaosFailure] = useState(false)
+
     // Logs & Notifications
     const [logs, setLogs] = useState([])
     const [notifications, setNotifications] = useState({}) // { orderId: [events] }
@@ -24,23 +28,19 @@ export default function TestClientPage() {
 
     // Auto-scroll effects
     useEffect(() => {
+        // Fetch Chaos Status
+        axios.get('http://localhost:5002/api/chaos/status')
+            .then(res => {
+                setIsChaosLatency(res.data.isLatencyEnabled);
+                setIsChaosFailure(res.data.isFailureEnabled);
+            })
+            .catch(() => console.log("Chaos Endpoint check failed (Stock API might be down)"));
+
         logsEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }, [logs])
 
     // Note: Notifications object changes keys, so we scroll on new orders
     useEffect(() => {
-        // notification-grid is reversed in render currently, but for auto-scroll "down" 
-        // usually implies seeing the latest. 
-        // If the user wants to see the NEWEST item which is at the TOP (reverse map),
-        // then "scroll down" might be confusing. 
-        // However, usually logs scroll to bottom. 
-        // Let's assume standard log behavior: Newest at bottom if normal map, Newest at top if reverse map.
-        // The current render uses .reverse(). So newest is at TOP. 
-        // If Newest is at TOP, scroll should stay at TOP (0,0).
-        // BUT the user asked for "auto scroll down". 
-        // This implies the list grows DOWNWARDS.
-        // Let's REMOVE .reverse() from the render so latest is at the BOTTOM, satisfying "scroll down".
-
         notificationsEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }, [notifications])
 
@@ -136,6 +136,31 @@ export default function TestClientPage() {
         }
     }
 
+    // Showcase Functions
+    const toggleChaosLatency = async () => {
+        try {
+            const newState = !isChaosLatency;
+            await axios.post(`http://localhost:5002/api/chaos/toggle-latency?enable=${newState}`);
+            setIsChaosLatency(newState);
+            addLog('Chaos', `Latency Mode ${newState ? 'ENABLED' : 'DISABLED'}`);
+        } catch (e) { alert(e.message) }
+    }
+
+    const toggleChaosFailure = async () => {
+        try {
+            const newState = !isChaosFailure;
+            await axios.post(`http://localhost:5002/api/chaos/toggle-failure?enable=${newState}`);
+            setIsChaosFailure(newState);
+            addLog('Chaos', `Failure Mode ${newState ? 'ENABLED' : 'DISABLED'}`);
+        } catch (e) { alert(e.message) }
+    }
+
+    const runStressTest = () => {
+        if (confirm("This will send 500 orders immediately. Are you sure?")) {
+            createOrders(500);
+        }
+    }
+
     const createOrders = async (count, isAuto = false) => {
         if (!isAuto) setIsLoading(true);
         addLog('Client', `Creating ${count} orders...`);
@@ -188,12 +213,57 @@ export default function TestClientPage() {
         <div className="page-container">
             <h1>Beymen E-Commerce Test Client</h1>
 
+            {/* SHOWCASE PANEL 
+            <div className="controls-card" style={{ marginBottom: '20px', borderLeft: '5px solid #6f42c1', background: '#f8f9fa' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <h2 style={{ margin: 0, color: '#6f42c1' }}>🚀 Showcase</h2>
+                    <div style={{ display: 'flex', gap: '15px' }}>
+                        <button
+                            onClick={runStressTest}
+                            style={{ backgroundColor: '#6f42c1', color: 'white', fontWeight: 'bold' }}
+                            disabled={isLoading}
+                        >
+                            ⚡ Stress Test (500 Orders)
+                        </button>
+
+                        <button
+                            onClick={toggleChaosLatency}
+                            style={{
+                                backgroundColor: isChaosLatency ? '#dc3545' : '#e2e6ea',
+                                color: isChaosLatency ? 'white' : 'black',
+                                border: isChaosLatency ? 'none' : '1px solid #ccc'
+                            }}
+                        >
+                            {isChaosLatency ? '🐢 Disable Latency' : '🐢 Simulate Latency'}
+                        </button>
+
+                        <button
+                            onClick={toggleChaosFailure}
+                            style={{
+                                backgroundColor: isChaosFailure ? '#dc3545' : '#e2e6ea',
+                                color: isChaosFailure ? 'white' : 'black',
+                                border: isChaosFailure ? 'none' : '1px solid #ccc'
+                            }}
+                        >
+                            {isChaosFailure ? '💥 Disable Failure' : '💥 Simulate Failure'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            */}
 
             {/* NEW: Stock Management Panel */}
             <div className="controls-card" style={{ marginBottom: '20px', borderLeft: '5px solid #ffc107' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <h3 style={{ margin: 0 }}>⚠️ Stock Management</h3>
                     <div style={{ display: 'flex', gap: '10px' }}>
+                        <button
+                            onClick={runStressTest}
+                            style={{ backgroundColor: '#6f42c1', color: 'white', fontWeight: 'bold' }}
+                            disabled={isLoading}
+                        >
+                            ⚡ Stress Test (500 Orders)
+                        </button>
                         <button onClick={resetStocks} style={{ backgroundColor: '#ffc107', color: '#000' }}>
                             🔄 Reset Stocks (100)
                         </button>
@@ -240,6 +310,7 @@ export default function TestClientPage() {
                             </button>
                         </div>
                     )}
+
                 </div>
             </div>
 

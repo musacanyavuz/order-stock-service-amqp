@@ -81,10 +81,10 @@ app.MapControllers();
 app.MapPrometheusScrapingEndpoint();
 
 // Apply migrations
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
-    context.Database.EnsureCreated();
-}
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
+        context.Database.Migrate();
+    }
 
 app.Run();

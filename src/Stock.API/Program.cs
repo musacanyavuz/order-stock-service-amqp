@@ -51,9 +51,8 @@ builder.Services.AddMassTransit(x =>
         cfg.ReceiveEndpoint("stock-service", e =>
         {
             e.UseConsumeFilter(typeof(Shared.Logging.MongoLogConsumeFilter<>), context);
-            
             e.UseMessageRetry(r => r.Exponential(5, TimeSpan.FromMilliseconds(200), TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(1)));
-
+            //e.PrefetchCount = 1;
             e.UseEntityFrameworkOutbox<StockDbContext>(context);
             e.ConfigureConsumer<OrderCreatedConsumer>(context);
         });

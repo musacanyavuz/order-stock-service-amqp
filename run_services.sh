@@ -11,11 +11,20 @@ cleanup() {
     fi
 
     # Stop Docker services
-    docker-compose down
+    # Stop Docker services only if Docker is running
+    if docker info > /dev/null 2>&1; then
+        docker-compose down
+    fi
 }
 
 # Trap exit signals to ensure cleanup runs
 trap cleanup EXIT INT TERM
+
+# Check if Docker is running
+if ! docker info > /dev/null 2>&1; then
+    echo "Error: Docker daemon is not running. Please start Docker Desktop and try again."
+    exit 1
+fi
 
 # Start fresh
 echo "Cleaning up any old Docker resources..."
@@ -28,7 +37,10 @@ echo "Starting System via Docker Compose..."
 echo "  - PostgreSQL, RabbitMQ, MongoDB"
 echo "  - Order, Stock, Notification APIs"
 echo "  - Prometheus, Grafana"
-docker-compose up -d --build
+if ! docker-compose up -d --build; then
+    echo "Error: Failed to start services via Docker Compose."
+    exit 1
+fi
 
 echo "Waiting for services to be ready..."
 sleep 10

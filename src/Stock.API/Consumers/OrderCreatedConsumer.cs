@@ -23,6 +23,19 @@ namespace Stock.API.Consumers
 
         public async Task Consume(ConsumeContext<IOrderCreated> context)
         {
+            // Chaos Logic for Demo
+            if (Controllers.ChaosController.IsLatencyEnabled)
+            {
+                Console.WriteLine("[Stock.API] CHAOS MODE: Simulating Latency (2s)...");
+                await Task.Delay(2000); // Backpressure simulator
+            }
+
+            if (Controllers.ChaosController.IsFailureEnabled)
+            {
+                Console.WriteLine("[Stock.API] CHAOS MODE: Simulating Crash...");
+                throw new InvalidOperationException("Chaos Mode: Simulated Failure"); // Error Rate simulator
+            }
+
             Console.WriteLine($"[Stock.API] HIT! Raw Consume Method called for Order {context.Message.OrderId}");
             var requestId = context.Headers.Get<string>("X-Request-ID") ?? Guid.NewGuid().ToString();
 
